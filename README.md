@@ -1,3 +1,5 @@
+Added MD5 Field for __handleFile
+
 # Multer [![Build Status](https://travis-ci.org/expressjs/multer.svg?branch=master)](https://travis-ci.org/expressjs/multer) [![NPM version](https://badge.fury.io/js/multer.svg)](https://badge.fury.io/js/multer) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
 
 Multer is a node.js middleware for handling `multipart/form-data`, which is primarily used for uploading files. It is written
