@@ -4,17 +4,17 @@ var path = require('path')
 var crypto = require('crypto')
 var mkdirp = require('mkdirp')
 
-function getFilename (req, file, cb) {
+function getFilename(req, file, cb) {
   crypto.randomBytes(16, function (err, raw) {
     cb(err, err ? undefined : raw.toString('hex'))
   })
 }
 
-function getDestination (req, file, cb) {
+function getDestination(req, file, cb) {
   cb(null, os.tmpdir())
 }
 
-function DiskStorage (opts) {
+function DiskStorage(opts) {
   this.getFilename = (opts.filename || getFilename)
 
   if (typeof opts.destination === 'string') {
@@ -25,7 +25,7 @@ function DiskStorage (opts) {
   }
 }
 
-DiskStorage.prototype._handleFile = function _handleFile (req, file, cb) {
+DiskStorage.prototype._handleFile = function _handleFile(req, file, cb) {
   var that = this
   var hash = crypto.createHash('md5')
   that.getDestination(req, file, function (err, destination) {
@@ -44,21 +44,19 @@ DiskStorage.prototype._handleFile = function _handleFile (req, file, cb) {
       })
       outStream.on('finish', function () {
         const md5 = hash.digest('hex').toLowerCase();
-        fs.rename(oldPath, finalPath, () => {
-          cb(null, {
-            destination: destination,
-            md5: md5,
-            filename: filename,
-            path: finalPath,
-            size: outStream.bytesWritten
-          })
+        cb(null, {
+          destination: destination,
+          md5: md5,
+          filename: filename,
+          path: finalPath,
+          size: outStream.bytesWritten
         })
       })
     })
   })
 }
 
-DiskStorage.prototype._removeFile = function _removeFile (req, file, cb) {
+DiskStorage.prototype._removeFile = function _removeFile(req, file, cb) {
   var path = file.path
 
   delete file.destination
