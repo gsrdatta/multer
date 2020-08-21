@@ -1,25 +1,29 @@
-Added MD5 Field for __handleFile
+# Multer-md5
 
-# Multer [![Build Status](https://travis-ci.org/expressjs/multer.svg?branch=master)](https://travis-ci.org/expressjs/multer) [![NPM version](https://badge.fury.io/js/multer.svg)](https://badge.fury.io/js/multer) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
+clone of [multer](https://github.com/expressjs/multer)
+
+` will add md5 hash in file Object given by multer after upload below is the sample response`
+
+```json
+{
+"destination": "destination",
+"md5": "md5",
+"filename": "fileName",
+"path": "finalPath",
+"size": "size"
+}
+```
 
 Multer is a node.js middleware for handling `multipart/form-data`, which is primarily used for uploading files. It is written
 on top of [busboy](https://github.com/mscdex/busboy) for maximum efficiency.
 
 **NOTE**: Multer will not process any form which is not multipart (`multipart/form-data`).
 
-## Translations 
-
-This README is also available in other languages:
-
-- [简体中文](https://github.com/expressjs/multer/blob/master/doc/README-zh-cn.md) (Chinese)
-- [한국어](https://github.com/expressjs/multer/blob/master/doc/README-ko.md) (Korean)
-- [Русский язык](https://github.com/expressjs/multer/blob/master/doc/README-ru.md) (Russian)
-- [Português](https://github.com/expressjs/multer/blob/master/doc/README-pt-br.md) (Português Brazil)
 
 ## Installation
 
 ```sh
-$ npm install --save multer
+$ npm install --save multer-md5
 ```
 
 ## Usage
@@ -45,11 +49,13 @@ var app = express()
 
 app.post('/profile', upload.single('avatar'), function (req, res, next) {
   // req.file is the `avatar` file
+  // will get md5 in req.file so that we can use that for finding duplicate uploads 
   // req.body will hold the text fields, if there were any
 })
 
 app.post('/photos/upload', upload.array('photos', 12), function (req, res, next) {
   // req.files is array of `photos` files
+  // will get md5 in req.files so that we can use that for finding duplicate uploads 
   // req.body will contain the text fields, if there were any
 })
 
@@ -322,11 +328,6 @@ app.post('/profile', function (req, res) {
     // Everything went fine.
   })
 })
-```
-
-## Custom storage engine
-
-For information on how to build your own storage engine, see [Multer Storage Engine](https://github.com/expressjs/multer/blob/master/StorageEngine.md).
 
 ## License
 
